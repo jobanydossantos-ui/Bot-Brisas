@@ -5,18 +5,17 @@ import os
 
 app = Flask(__name__)
 
-# === OFICIAL LAS BRISAS - YA CONFIGURADO ===
 TOKEN_WHATSAPP = "EAAS5325EUUEBScxbiPZCibjWFtkTN9wD92EWnfHXN6pwibrUrtph7BofKsIDOoo5ezQ42oTxcRzFRQIae37b2q3dM0OyZAW5yfjTiEspVzteZBDnERK6rlXiZCvSj3vADIjkRt4MgjD6yl5IsdZBCS01d2TflZCyaJzZAsmXpfTHyqIHH09CfxLQLceN9vL7lCfyQZDZD"
 ID_NUMERO = "1310387282157551"
 VERIFY_TOKEN = "brisas123"
 
 PROMOS = {
     "lunes": "Lunes cerrados, te esperamos el martes.",
-    "martes": "Martes carta completa y micheladas bien frías.",
-    "miercoles": "Miércoles Perlas Negras 2x1 hasta 5pm",
-    "jueves": "Jueves Coctelería de Litro en $100 y Perla 2x1 hasta 5pm",
-    "viernes": "Viernes Coctelería Litro $100 y Perla 2x1 hasta 5pm",
-    "sabado": "Sábado de Botellas y Perla Negra",
+    "martes": "Martes carta completa y micheladas bien frias.",
+    "miercoles": "Miercoles Perlas Negras 2x1 hasta 5pm",
+    "jueves": "Jueves Cocteleria de Litro en $100 y Perla 2x1 hasta 5pm",
+    "viernes": "Viernes Cocteleria Litro $100 y Perla 2x1 hasta 5pm",
+    "sabado": "Sabado de Botellas y Perla Negra",
     "domingo": "Domingo familiar con consumo"
 }
 
@@ -46,16 +45,13 @@ def webhook():
         if "messages" in value:
             de = value["messages"][0]["from"]
             texto = value["messages"][0].get("text", {}).get("body", "").lower()
-
             hoy_en = datetime.now().strftime("%A").lower()
             mapa = {"monday":"lunes","tuesday":"martes","wednesday":"miercoles","thursday":"jueves","friday":"viernes","saturday":"sabado","sunday":"domingo"}
             hoy = mapa.get(hoy_en, "viernes")
-
             if any(x in texto for x in ["hola","menu","carta","promo","hoy"]):
-                resp = f"Hola! 🌴 Soy Brisa de Las Brisas.\n\nHoy es {hoy}: {PROMOS[hoy]}\n\n¿Que te gustaría saber?"
+                resp = f"Hola! 🌴 Soy Brisa de Las Brisas.\n\nHoy es {hoy}: {PROMOS[hoy]}"
             else:
                 resp = f"{PROMOS[hoy]}"
-
             enviar(de, resp)
     except Exception as e:
         print(e)
